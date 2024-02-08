@@ -28,8 +28,10 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.3",
     "dotenv": "^16.4.1",
+    "env-var": "^7.4.1",
     "nodemailer": "^6.9.9"
   }
 }

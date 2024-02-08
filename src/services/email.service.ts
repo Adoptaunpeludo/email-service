@@ -1,13 +1,19 @@
 import nodemailer, { Transporter } from 'nodemailer';
 
+interface Options {
+  email: string;
+  verificationToken: string;
+  type: string;
+}
+
 export interface SendMailOptions {
   to: string | string[];
   subject: string;
   htmlBody: string;
-  attachements?: Attachement[];
+  attachments?: Attachment[];
 }
 
-export interface Attachement {
+export interface Attachment {
   filename: string;
   path: string;
 }
@@ -30,17 +36,16 @@ export class EmailService {
     });
   }
 
-  public async sendEmailValidationLink(
-    email: string,
-    token: string,
-    type: string
-  ) {
-    // if (!token)
-    //   throw new InternalServerError(
-    //     'Error while generating JWT token, check server logs'
-    //   );
-
-    const { html, title } = this.generateEmailContent(type, token, email);
+  public async sendEmailValidationLink({
+    email,
+    verificationToken,
+    type,
+  }: Options) {
+    const { html, title } = this.generateEmailContent(
+      type,
+      verificationToken,
+      email
+    );
 
     const options = {
       to: email,
@@ -50,8 +55,7 @@ export class EmailService {
 
     const isSent = await this.sendEmail(options);
 
-    // if (!isSent)
-    //   throw new InternalServerError('Error sending email, check server logs');
+    if (!isSent) return false;
 
     return true;
   }
@@ -74,14 +78,14 @@ export class EmailService {
   }
 
   private async sendEmail(options: SendMailOptions): Promise<boolean> {
-    const { to, subject, htmlBody, attachements = [] } = options;
+    const { to, subject, htmlBody, attachments: attachments = [] } = options;
 
     try {
       const sentInformation = await this.transporter.sendMail({
         to: to,
         subject: subject,
         html: htmlBody,
-        attachments: attachements,
+        attachments: attachments,
       });
 
       return true;
