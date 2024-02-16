@@ -6,6 +6,11 @@ interface Options {
   type: string;
 }
 
+interface NotificationOptions {
+  email: string;
+  changes: { [key: string]: string | boolean };
+}
+
 export interface SendMailOptions {
   to: string | string[];
   subject: string;
@@ -34,6 +39,37 @@ export class EmailService {
         pass: senderEmailPassword,
       },
     });
+  }
+
+  public async sendAnimalChangedNotification({
+    changes,
+    email,
+  }: NotificationOptions) {
+    const title = 'Un animal de tus favoritos ha cambiado!';
+
+    let message = '';
+
+    Object.entries(changes).forEach(
+      ([key, value]) => (message += `<p>${key}: ${value}</p>`)
+    );
+
+    const html = `
+        <h1>${title}</h1>
+        <h2>Cambios:</h2>
+        <span>${message}</span>
+    `;
+
+    const options = {
+      to: email,
+      subject: title,
+      htmlBody: html,
+    };
+
+    const isSent = await this.sendEmail(options);
+
+    if (!isSent) return false;
+
+    return true;
   }
 
   public async sendEmailValidationLink({
