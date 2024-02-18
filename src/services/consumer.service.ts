@@ -3,7 +3,7 @@ import { EmailService } from './email.service';
 import { ConfirmChannel } from 'amqplib';
 
 export class ConsumerService {
-  private channelWrapper: ChannelWrapper;
+  private channelWrapper: ChannelWrapper | undefined = undefined;
   private EXCHANGE: string;
   constructor(
     private emailService: EmailService,
@@ -11,13 +11,17 @@ export class ConsumerService {
     private readonly queue: string
   ) {
     this.EXCHANGE = 'email-request';
-    const connection = amqp.connect(this.rabbitmqUrl);
-    this.channelWrapper = connection.createChannel();
+    try {
+      const connection = amqp.connect(this.rabbitmqUrl);
+      this.channelWrapper = connection.createChannel();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public async consume() {
     try {
-      await this.channelWrapper.addSetup(async (channel: ConfirmChannel) => {
+      await this.channelWrapper!.addSetup(async (channel: ConfirmChannel) => {
         await channel.assertQueue(this.queue, { durable: true });
         await channel.bindQueue(this.queue, this.EXCHANGE, this.queue);
         await channel.consume(this.queue, async (message) => {

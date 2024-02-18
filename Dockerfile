@@ -12,7 +12,8 @@ RUN npm run build
 
 FROM node:21-alpine as mail-consumer
 WORKDIR /app
-COPY --from=builder /app .
-COPY prisma ./primsa
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY ./package.json .
 
 CMD [ "npm", "start" ]
