@@ -102,7 +102,7 @@ export class EmailService {
     const action =
       type === 'email' ? 'validar tu email' : 'cambiar tu password';
 
-    const link = `${this.webServiceUrl}/user/${endPoint}?token=${token}&email=${email}`;
+    const link = `${this.webServiceUrl}/users/${endPoint}/${token}`;
 
     const html = `
         <h1>${title}</h1>
