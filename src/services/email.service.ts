@@ -11,6 +11,11 @@ interface NotificationOptions {
   changes: { [key: string]: string | boolean };
 }
 
+interface UnreadMessageOptions {
+  chat: string;
+  email: string;
+}
+
 export interface SendMailOptions {
   to: string | string[];
   subject: string;
@@ -39,6 +44,30 @@ export class EmailService {
         pass: senderEmailPassword,
       },
     });
+  }
+
+  public async sendUnreadChatMessage({ chat, email }: UnreadMessageOptions) {
+    const title = 'Tienes mensajes de chat sin leer';
+    const endPoint = 'private/chat';
+    const link = `${this.webServiceUrl}/${endPoint}/${chat}`;
+
+    const html = `
+        <h1>${title}</h1>
+        <p>Por favor haz click en el siguiente link para acceder al chat</p>
+        <a href="${link}">${title}</a>
+    `;
+
+    const options = {
+      to: email,
+      subject: title,
+      htmlBody: html,
+    };
+
+    const isSent = await this.sendEmail(options);
+
+    if (!isSent) return false;
+
+    return true;
   }
 
   public async sendAnimalChangedNotification({

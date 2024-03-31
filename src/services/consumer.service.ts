@@ -45,6 +45,9 @@ export class ConsumerService {
                 await this.emailService.sendEmailValidationLink(content);
                 break;
               }
+              case 'chat-message': {
+                await this.emailService.sendUnreadChatMessage(content);
+              }
               default: {
                 ('Unknown queue');
               }

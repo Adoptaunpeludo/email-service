@@ -7,6 +7,7 @@ import { ConsumerService } from './services/consumer.service';
 const VERIFY_QUEUE = 'verify-email';
 const PASSWORD_QUEUE = 'change-password';
 const NOTIFICATION_QUEUE = 'animal-changed-notification';
+const CHAT_MESSAGE_QUEUE = 'chat-message';
 
 (async () => {
   await main();
@@ -43,4 +44,12 @@ async function main() {
   );
 
   await changePasswordConsumer.consume();
+
+  const unreadMessagesConsumer = new ConsumerService(
+    emailService,
+    envs.RABBITMQ_URL,
+    CHAT_MESSAGE_QUEUE
+  );
+
+  await unreadMessagesConsumer.consume();
 }
