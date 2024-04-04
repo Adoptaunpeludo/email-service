@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from 'nodemailer';
+import { QueueService } from './queue.service';
 
 interface Options {
   email: string;
@@ -28,13 +29,18 @@ export interface Attachment {
   path: string;
 }
 
+interface ServiceOptions {
+  mailerService: string;
+  mailerEmail: string;
+  senderEmailPassword: string;
+}
+
 export class EmailService {
   private transporter: Transporter;
 
   constructor(
-    mailerService: string,
-    mailerEmail: string,
-    senderEmailPassword: string,
+    { mailerService, mailerEmail, senderEmailPassword }: ServiceOptions,
+    private readonly errorLogsService: QueueService,
     private readonly webServiceUrl?: string
   ) {
     this.transporter = nodemailer.createTransport({
@@ -156,6 +162,15 @@ export class EmailService {
       return true;
     } catch (error) {
       console.log({ error });
+      this.errorLogsService.addMessageToQueue(
+        {
+          message: `Error sending email: ${error}`,
+
+          level: 'high',
+          origin: 'Email Service',
+        },
+        'error-logs'
+      );
       return false;
     }
   }

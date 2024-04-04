@@ -1,12 +1,14 @@
 import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { EmailService } from './email.service';
 import { ConfirmChannel } from 'amqplib';
+import { QueueService } from './queue.service';
 
 export class ConsumerService {
   private channelWrapper: ChannelWrapper | undefined = undefined;
   private EXCHANGE: string;
   constructor(
     private emailService: EmailService,
+    private errorLogsService: QueueService,
     private readonly rabbitmqUrl: string,
     private readonly queue: string
   ) {
@@ -61,6 +63,15 @@ export class ConsumerService {
       );
     } catch (err) {
       console.log('Error starting the consumer: ', err);
+      this.errorLogsService.addMessageToQueue(
+        {
+          message: `Error starting the ${this.queue} consumer: ${err}`,
+
+          level: 'high',
+          origin: 'WebSocket Server',
+        },
+        'error-logs'
+      );
     }
   }
 }
