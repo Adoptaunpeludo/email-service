@@ -145,6 +145,12 @@ export class EmailService {
   private async sendEmail(options: SendMailOptions): Promise<boolean> {
     const { to, subject, htmlBody, attachments: attachments = [] } = options;
 
+    if (
+      (typeof to === 'string' && to === 'test@test.com') ||
+      to.includes('test@test.com')
+    )
+      return false;
+
     try {
       const sentInformation = await this.transporter.sendMail({
         to: to,
