@@ -85,7 +85,7 @@ export class EmailService {
     const html = `
         <h1>${title}</h1>
         <p>Por favor haz click en el siguiente link para ver el animal</p>
-        <a href="${link}">${title}</a>
+        <a href=${this.webServiceUrl}/${link}>${title}</a>
     `;
 
     const options = {
