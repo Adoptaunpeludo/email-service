@@ -8,8 +8,8 @@ interface Options {
 }
 
 interface NotificationOptions {
+  link: string;
   email: string;
-  changes: { [key: string]: string | boolean };
 }
 
 interface UnreadMessageOptions {
@@ -77,21 +77,15 @@ export class EmailService {
   }
 
   public async sendAnimalChangedNotification({
-    changes,
+    link,
     email,
   }: NotificationOptions) {
     const title = 'Un animal de tus favoritos ha cambiado!';
 
-    let message = '';
-
-    Object.entries(changes).forEach(
-      ([key, value]) => (message += `<p>${key}: ${value}</p>`)
-    );
-
     const html = `
         <h1>${title}</h1>
-        <h2>Cambios:</h2>
-        <span>${message}</span>
+        <p>Por favor haz click en el siguiente link para ver el animal</p>
+        <a href="${link}">${title}</a>
     `;
 
     const options = {

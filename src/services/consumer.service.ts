@@ -32,11 +32,7 @@ export class ConsumerService {
 
             switch (this.queue) {
               case 'animal-changed-notification': {
-                const { email, ...changes } = content;
-                await this.emailService.sendAnimalChangedNotification({
-                  changes,
-                  email,
-                });
+                await this.emailService.sendAnimalChangedNotification(content);
                 break;
               }
               case 'verify-email': {
