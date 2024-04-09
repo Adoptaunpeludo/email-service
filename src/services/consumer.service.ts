@@ -3,6 +3,13 @@ import { EmailService } from './email.service';
 import { ConfirmChannel } from 'amqplib';
 import { QueueService } from './queue.service';
 
+/**
+ * Creates an instance of ConsumerService.
+ * @param emailService The email service used to send emails.
+ * @param errorLogsService The queue service used to log error messages.
+ * @param rabbitmqUrl The URL of the RabbitMQ server.
+ * @param queue The name of the queue to consume messages from.
+ */
 export class ConsumerService {
   private channelWrapper: ChannelWrapper | undefined = undefined;
   private EXCHANGE: string;
@@ -21,6 +28,9 @@ export class ConsumerService {
     }
   }
 
+  /**
+   * Starts consuming messages from the specified queue.
+   */
   public async consume() {
     try {
       await this.channelWrapper!.addSetup(async (channel: ConfirmChannel) => {
