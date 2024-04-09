@@ -35,6 +35,9 @@ interface ServiceOptions {
   senderEmailPassword: string;
 }
 
+/**
+ * Service for sending emails.
+ */
 export class EmailService {
   private transporter: Transporter;
 
@@ -52,6 +55,11 @@ export class EmailService {
     });
   }
 
+  /**
+   * Sends an email notification for unread chat messages.
+   * @param options Options for sending unread chat message notification.
+   * @returns A boolean indicating whether the email was sent successfully.
+   */
   public async sendUnreadChatMessage({ chat, email }: UnreadMessageOptions) {
     const title = 'Tienes mensajes de chat sin leer';
     const endPoint = 'private/chat';
@@ -76,6 +84,11 @@ export class EmailService {
     return true;
   }
 
+  /**
+   * Sends a notification when an animal of interest changes.
+   * @param options Options for sending animal changed notification.
+   * @returns A boolean indicating whether the email was sent successfully.
+   */
   public async sendAnimalChangedNotification({
     link,
     email,
@@ -101,6 +114,11 @@ export class EmailService {
     return true;
   }
 
+  /**
+   * Sends an email validation link.
+   * @param options Options for sending email validation link.
+   * @returns A boolean indicating whether the email was sent successfully.
+   */
   public async sendEmailValidationLink({
     email,
     verificationToken,
@@ -125,6 +143,13 @@ export class EmailService {
     return true;
   }
 
+  /**
+   * Generates email content based on the type of email and token provided.
+   * @param type The type of email (either 'email' or 'reset-password').
+   * @param token The token to include in the email link.
+   * @param email The recipient's email address.
+   * @returns An object containing the HTML content of the email and its title.
+   */
   private generateEmailContent(type: string, token: string, email: string) {
     const endPoint = type === 'email' ? 'verify-email' : 'reset-password';
     const title = type === 'email' ? 'Valida tu Email' : 'Cambia tu password';
@@ -142,6 +167,11 @@ export class EmailService {
     return { html, title };
   }
 
+  /**
+   * Sends an email based on the provided options.
+   * @param options The options for sending the email.
+   * @returns A boolean indicating whether the email was sent successfully.
+   */
   private async sendEmail(options: SendMailOptions): Promise<boolean> {
     const { to, subject, htmlBody, attachments: attachments = [] } = options;
 
