@@ -28,7 +28,7 @@ Utiliza nodemailer como transporter para el envio de estos emails.
 
 ## Instalación
 
-Consultar la documentación de la API para arrancar este servicio junto a todos los otros usando Docker.
+Consultar la documentación de la [API](https://github.com/Adoptaunpeludo/backend) para arrancar este servicio junto a todos los otros usando Docker.
 
 1. Clonar el repo, movernos al directorio e instalar las depencencias:
 
