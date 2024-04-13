@@ -8,17 +8,17 @@ Este servicio es dependiente de la [API](https://github.com/Adoptaunpeludo/backe
 
 Servicio encargado del envio de emails, se conecta a un broker de mensajes RabbitMQ donde recibe mensajes desde el exchange 'email-request' y que consumirá estos mensajes en las siguientes colas:
 
-- verify-email: Cola encargada de mandar un email de validación con un link para verificar la dirección de email registrada a los usuarios que se registren usando un nombre de usuario, email y contraseña.
+- **verify-email**: Cola encargada de mandar un email de validación con un link para verificar la dirección de email registrada a los usuarios que se registren usando un nombre de usuario, email y contraseña.
 
-- change-password: Cola encargada de mandar un email con un link para cambiar su password si el usuario lo ha olvidado y no puede entrar en la aplicación.
+- **change-password**: Cola encargada de mandar un email con un link para cambiar su password si el usuario lo ha olvidado y no puede entrar en la aplicación.
 
-- animal-changed-notification: Cola encargada de mandar un email notificando al usuario que un animal de sus favoritos ha cambiado, este email se genera solo si el animal de sus favoritos cambia mientras el usuario se encuentra offline.
+- **animal-changed-notification**: Cola encargada de mandar un email notificando al usuario que un animal de sus favoritos ha cambiado, este email se genera solo si el animal de sus favoritos cambia mientras el usuario se encuentra offline.
 
-- chat-message: Cola encargada de mandar un email notificando al usuario que tiene mensajes de chat sin leer, este email se genera solo si el usuario recibe un mensaje de chat estando offline.
+- **chat-message**: Cola encargada de mandar un email notificando al usuario que tiene mensajes de chat sin leer, este email se genera solo si el usuario recibe un mensaje de chat estando offline.
 
 A su vez este servicio mandará mensajes a un exchange:
 
-- error-notification:  A la cola 'error-logs' para que el servicio NOC se encargue de guardar y notificar a los administradores del error segun su 'level'
+- **error-notification**:  A la cola 'error-logs' para que el servicio NOC se encargue de guardar y notificar a los administradores del error segun su 'level'
 
 ## Funcionalidad:
 
