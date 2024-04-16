@@ -1,4 +1,4 @@
-export const chatMessages = link => {
+export const mailValidation = (title: string, action: string, link: string) => {
   return `
     <body width="100%" style="margin: 0 auto">
   <table
@@ -38,7 +38,7 @@ export const chatMessages = link => {
                   text-align: center;
                   margin: 0;
                 "
-              >Tienes mensajes de chat sin leer
+              ><h1>${title}</h1>
               </h1>
               
               <h2
@@ -54,7 +54,7 @@ export const chatMessages = link => {
                   text-align: center;
                 "
               >
-                Por favor haz click en el siguiente link para acceder al chat
+                Por favor haz click en el siguiente link para ${action}
               </h2>
             </td>
           </tr>
@@ -81,12 +81,12 @@ export const chatMessages = link => {
                   direction: ltr;
                   letter-spacing: 0px;
                 "
-                >Ver Mensajes</a
+                >${title}</a
               >
             </td>
             <td width="33%"></td>
           </tr>
-         
+          
         </table>
       </td>
     </tr>

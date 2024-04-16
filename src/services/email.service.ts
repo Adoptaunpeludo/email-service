@@ -74,7 +74,7 @@ export class EmailService {
     //     <a href="${link}">${title}</a>
     // `;
 
-    const html = chatMessages(link)
+    const html = chatMessages(link);
 
     const options = {
       to: email,
@@ -106,7 +106,7 @@ export class EmailService {
     //     <a href=${this.webServiceUrl}/${link}>${title}</a>
     // `;
 
-    const html = petChanged(this.webServiceUrl, link)
+    const html = petChanged(this.webServiceUrl!, link);
 
     const options = {
       to: email,
@@ -170,7 +170,7 @@ export class EmailService {
     //     <p>Por favor haz click en el siguiente link para ${action}</p>
     //     <a href="${link}">${title}</a>
     // `;
-    const html = mailValidation(title,action, link)
+    const html = mailValidation(title, action, link);
 
     return { html, title };
   }

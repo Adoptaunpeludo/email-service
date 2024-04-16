@@ -1,5 +1,8 @@
-export const mailValidation = (title, action, link) => {
-  return `
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.petChanged = void 0;
+const petChanged = (webServiceUrl, link) => {
+    return `
     <body width="100%" style="margin: 0 auto">
   <table
     width="90%"
@@ -38,9 +41,25 @@ export const mailValidation = (title, action, link) => {
                   text-align: center;
                   margin: 0;
                 "
-              ><h1>${title}</h1>
+              >
+                Un peludo de tus favoritos
               </h1>
-              
+              <h1
+                style="
+                  color: rgb(0, 0, 0);
+                  font-family: 'Helvetica Neue', Helvetica, Arial, Verdana,
+                    sans-serif;
+                  font-size: 31px;
+                  font-weight: bold;
+                  line-height: 1.5;
+                  text-align: left;
+                  direction: ltr;
+                  text-align: center;
+                  margin: 0;
+                "
+              >
+                ¡Ha cambiado!
+              </h1>
               <h2
                 style="
                   color: rgb(0, 0, 0);
@@ -54,7 +73,7 @@ export const mailValidation = (title, action, link) => {
                   text-align: center;
                 "
               >
-                Por favor haz click en el siguiente link para ${action}
+                Pulsa en el link para ver el peludo
               </h2>
             </td>
           </tr>
@@ -62,7 +81,7 @@ export const mailValidation = (title, action, link) => {
             <td width="33%"></td>
             <td width="33%">
               <a
-                href="${link}"
+                href="${webServiceUrl}/${link}"
                 target="_blank"
                 style="
                   background-color: #a5c73d;
@@ -81,7 +100,7 @@ export const mailValidation = (title, action, link) => {
                   direction: ltr;
                   letter-spacing: 0px;
                 "
-                >${title}</a
+                >Ver ficha del peludo</a
               >
             </td>
             <td width="33%"></td>
@@ -123,3 +142,4 @@ export const mailValidation = (title, action, link) => {
     
     `;
 };
+exports.petChanged = petChanged;
