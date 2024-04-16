@@ -1,5 +1,8 @@
 import nodemailer, { Transporter } from 'nodemailer';
 import { QueueService } from './queue.service';
+import { petChanged } from '../templates/petChanged';
+import { chatMessages } from '../templates/chatMessages';
+import { mailValidation } from '../templates/mailValidation';
 
 interface Options {
   email: string;
@@ -65,11 +68,13 @@ export class EmailService {
     const endPoint = 'private/chat';
     const link = `${this.webServiceUrl}/${endPoint}/${chat}`;
 
-    const html = `
-        <h1>${title}</h1>
-        <p>Por favor haz click en el siguiente link para acceder al chat</p>
-        <a href="${link}">${title}</a>
-    `;
+    // const html = `
+    //     <h1>${title}</h1>
+    //     <p>Por favor haz click en el siguiente link para acceder al chat</p>
+    //     <a href="${link}">${title}</a>
+    // `;
+
+    const html = chatMessages(link)
 
     const options = {
       to: email,
@@ -95,11 +100,13 @@ export class EmailService {
   }: NotificationOptions) {
     const title = 'Un animal de tus favoritos ha cambiado!';
 
-    const html = `
-        <h1>${title}</h1>
-        <p>Por favor haz click en el siguiente link para ver el animal</p>
-        <a href=${this.webServiceUrl}/${link}>${title}</a>
-    `;
+    // const html = `
+    //     <h1>${title}</h1>
+    //     <p>Por favor haz click en el siguiente link para ver el animal</p>
+    //     <a href=${this.webServiceUrl}/${link}>${title}</a>
+    // `;
+
+    const html = petChanged(this.webServiceUrl, link)
 
     const options = {
       to: email,
@@ -158,11 +165,12 @@ export class EmailService {
 
     const link = `${this.webServiceUrl}/${endPoint}/${token}`;
 
-    const html = `
-        <h1>${title}</h1>
-        <p>Por favor haz click en el siguiente link para ${action}</p>
-        <a href="${link}">${title}</a>
-    `;
+    // const html = `
+    //     <h1>${title}</h1>
+    //     <p>Por favor haz click en el siguiente link para ${action}</p>
+    //     <a href="${link}">${title}</a>
+    // `;
+    const html = mailValidation(title,action, link)
 
     return { html, title };
   }
