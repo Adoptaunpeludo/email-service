@@ -185,7 +185,7 @@ export class EmailService {
 
     if (
       (typeof to === 'string' && to === 'test@test.com') ||
-      to.includes('test@test.com')
+      to?.includes('test@test.com')
     )
       return false;
 
