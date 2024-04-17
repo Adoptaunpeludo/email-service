@@ -41,7 +41,7 @@ export class ConsumerService {
             const content = JSON.parse(message.content.toString());
 
             switch (this.queue) {
-              case 'animal-changed-notification': {
+              case 'animal-changed': {
                 console.log({ content });
                 await this.emailService.sendAnimalChangedNotification(content);
                 break;
