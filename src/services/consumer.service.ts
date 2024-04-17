@@ -42,6 +42,7 @@ export class ConsumerService {
 
             switch (this.queue) {
               case 'animal-changed-notification': {
+                console.log({ content });
                 await this.emailService.sendAnimalChangedNotification(content);
                 break;
               }
