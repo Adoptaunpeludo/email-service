@@ -7,7 +7,7 @@ import { QueueService } from './services/queue.service';
 
 const VERIFY_QUEUE = 'verify-email';
 const PASSWORD_QUEUE = 'change-password';
-const NOTIFICATION_QUEUE = 'animal-changed-notification';
+const NOTIFICATION_QUEUE = 'animal-changed';
 const CHAT_MESSAGE_QUEUE = 'chat-message';
 
 (async () => {
